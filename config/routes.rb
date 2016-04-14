@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :activities
       resources :locations, only: [:index]
       resources :categories, only: [:index]
+      resources :sessions, only: [:create]
 
       namespace :activity_search do
         resources :histories, only: [:index]

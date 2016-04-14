@@ -13,19 +13,21 @@ class Api::V1::ActivitiesController < Api::BaseController
     activities = activities.where(date_from: date_from) if date_from && !date_to
     activities = activities.where("date_from >= ? ", date_from).where("date_from <= ? ", date_to) if date_from && date_to
 
-    render json: activities
+    render json: activities, root: nil
   end
 
   def show
     activity = Activity.find(params[:id])
 
-    render json: activity
+    render json: activity, root: nil
   end
 
-  # TODO: create UserActivity
   def create
-    activity = Activity.new(activities_params)
+    activity = current_user.activities.build(activities_params)
+    activity.state = :pending
     activity.save
+
+    user_activity = current_user.organized_activities.build(activity: activity, role: :organizer)
 
     render json: activity
   end

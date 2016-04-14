@@ -5,7 +5,7 @@ class Api::V1::CategoriesController < Api::BaseController
   def index
     categories = Category.all
 
-    render json: categories
+    render json: categories, root: nil
   end
 
 end

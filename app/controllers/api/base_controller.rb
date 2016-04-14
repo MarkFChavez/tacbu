@@ -7,29 +7,18 @@ class Api::BaseController < ActionController::Base
   private
 
   def authenticate
-    return authentication_error unless authorization
-
-    uid, access_token = authorization.split(":")
-
-    user = User.find_by(uid: uid)
+    user = User.find_by(api_key: api_key)
 
     unless user
-      user = User.create do |u|
-        u.email = ""
-        u.password = ""
-        u.uid = uid
-        u.access_token = access_token
-      end
+      authentication_error 
     end
-
-    sign_in user, store: false
   end
 
   def authentication_error
-    render json: { error: "Please sign in to continue." }, status: 401
+    render json: { error: 'Please sign in to continue.' }, status: 401
   end
 
-  def authorization
+  def api_key
     request.headers['Authorization']
   end
 end
