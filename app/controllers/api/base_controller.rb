@@ -7,7 +7,7 @@ class Api::BaseController < ActionController::Base
   private
 
   def authenticate
-    user = Koala::Facebook::API.new(access_token) rescue nil
+    user = User.find_by(access_token: access_token)
 
     if user
       sign_in user, store: false
