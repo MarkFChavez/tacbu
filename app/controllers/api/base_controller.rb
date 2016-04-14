@@ -9,7 +9,9 @@ class Api::BaseController < ActionController::Base
   def authenticate
     user = User.find_by(api_key: api_key)
 
-    unless user
+    if user
+      sign_in(user, store: false)
+    else
       authentication_error 
     end
   end

@@ -7,6 +7,18 @@ class Activity < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def self.recent
+    order(created_at: :desc)
+  end
+
+  def self.on_history
+    where(state: [:cancelled, :completed])
+  end
+
+  def self.booked
+    where(state: :booked)
+  end
+
   def organizer
     user_activity = user_activities.organizers.last
     user_activity.try(:user)

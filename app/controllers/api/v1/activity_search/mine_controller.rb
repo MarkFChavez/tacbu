@@ -1,9 +1,10 @@
 class Api::V1::ActivitySearch::MineController < Api::BaseController
+
   before_action :authenticate
 
   def index
     activities = current_user.activities
 
-    render json: activities
+    render json: activities, root: nil
   end
 end

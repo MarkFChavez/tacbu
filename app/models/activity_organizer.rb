@@ -9,8 +9,7 @@ class ActivityOrganizer
   end
 
   def create
-    user_activity = current_user.organized_activities.build(activity: create_activity)
-
+    user_activity = organizer.user_activities.create(activity: create_activity)
     user_activity.activity
   end
 

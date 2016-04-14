@@ -19,7 +19,7 @@ class ActivityCatalog
     activities = activities.where(date_from: date_from) if date_from && !date_to
     activities = activities.where("date_from >= ? ", date_from).where("date_from <= ? ", date_to) if date_from && date_to
 
-    activities
+    activities.recent
   end
 
   private

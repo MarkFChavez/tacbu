@@ -8,11 +8,16 @@ class User < ActiveRecord::Base
   has_many :activities, through: :user_activities
 
   def self.from_omniauth(auth)
-    where(uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name
-      user.api_key = generate_token
+    me = Koala::Facebook::API.new(auth["access_token"]).get_object("me") rescue nil
+
+    if me
+      where(uid: auth.uid).first_or_create do |user|
+        user.name = me["name"]
+        user.email = me["email"]
+        user.image = me["image"]
+        user.password = Devise.friendly_token[0, 20]
+        user.api_key = generate_token
+      end
     end
   end
 

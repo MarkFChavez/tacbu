@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414185511) do
+ActiveRecord::Schema.define(version: 20160414212424) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "date_from"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160414185511) do
     t.string   "uid"
     t.string   "name"
     t.string   "api_key"
+    t.string   "image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

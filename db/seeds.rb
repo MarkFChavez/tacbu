@@ -8,26 +8,24 @@
 
 
 #LOCATION
-makati_city = Location.create(city: "Makati City")
-quezon_city = Location.create(city: "Quezon City")
-pasig_city = Location.create(city: "Pasig City")
-
-
-#USER
-mark = User.create(email: "mrkchav3z@gmail.com", name: "Mark Chavez", access_token:"CAACEdEose0cBAH2aKftGQ2DUQZBrkKemL5fUIF2zaVFlMKxdsyiU1ETN1CmahDyngw3oE6cf6yMzmjA83pfT45jiaEpRoZBBLEzCB7pamCfJmvpwuBl3GNywyQDrFyNVUqM8ZBE4OUGAxUSZCy1q0Krsmop69R3OAGnpiCBk3Ff6UWXNX1t2rz71uJTWQKZBebGVE40MRYAZDZD", gender:"m", password: "foobar123")
+makati_city = Location.create(city: "makati")
+manila_city = Location.create(city: "manila")
+pasig_city = Location.create(city: "pasig")
 
 #CATEGORY
-jogging_buddy = Category.create(name:"jogging buddy")
-food_buddy = Category.create(name:"food buddy")
-study_buddy = Category.create(name:"study buddy")
-drinking_buddy = Category.create(name:"drinking buddy")
-travel_buddy = Category.create(name:"travel buddy")
-hiking_buddy = Category.create(name:"hiking buddy")
+jogging_buddy = Category.create(name:"jogging")
+food_buddy = Category.create(name:"food")
+study_buddy = Category.create(name:"study")
+drinking_buddy = Category.create(name:"drinking")
+swimming_buddy = Category.create(name:"swimming")
+hiking_buddy = Category.create(name:"hiking")
 
-#ACTIVITY
-food_trip = Activity.create(date_from: Time.now, name:"Food trip at Italiannis", location_id: makati_city.id, preferred_gender:"f", state:"pending", preferred_age_from:20, preferred_age_to: 25, category_id:food_buddy.id)
+#USER
+for i in 1..40
+  user = User.create(email: "user#{i}@gmail.com", name: "User #{i}", gender: "m", password: "foobar123", api_key: "#{i}23")
 
-#USER_ACTIVITY
-UserActivity.create(user_id:mark.id, activity_id:food_trip.id, role: :organizer)
-
-
+  for j in 1..3
+    activity = Activity.new(date_from: Time.now, name:"Activity #{i}", location: makati_city, preferred_gender:"f", state: :pending, preferred_age_from:20, preferred_age_to: 25, category: food_buddy)
+    ActivityOrganizer.create(attributes: activity.attributes, organizer: user)
+  end
+end
