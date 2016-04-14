@@ -4,6 +4,7 @@ class Api::V1::CategoriesController < Api::BaseController
 
   def index
     categories = Category.all
+
     render json: categories
   end
 
