@@ -7,20 +7,27 @@ class Api::BaseController < ActionController::Base
   private
 
   def authenticate
-    user = User.find_by(access_token: access_token)
+    uid, access_token = authorization.split(":")
 
-    if user
-      sign_in user, store: false
-    else
-      authentication_error
+    user = User.find_by(uid: uid)
+
+    unless user
+      user = User.create do |u|
+        u.email = ""
+        u.password = ""
+        u.uid = uid
+        u.access_token = access_token
+      end
     end
+
+    sign_in user, store: false
   end
 
   def authentication_error
     render json: { error: "Please sign in to continue." }, status: 401
   end
 
-  def access_token
+  def authorization
     request.headers['Authorization']
   end
 end
