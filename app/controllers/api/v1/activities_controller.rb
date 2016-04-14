@@ -5,12 +5,12 @@ class Api::V1::ActivitiesController < Api::BaseController
   def index
     activities = Activity.all
 
-    activities = activities.where(category:category) if category
-    activities = activities.where(preferred_gender:preferred_gender) if preferred_gender
+    activities = activities.where(category: category) if category
+    activities = activities.where(preferred_gender: preferred_gender) if preferred_gender
     activities = activities.where("preferred_age_from <= ? ", preferred_age_from).where("preferred_age_to >= ? ", preferred_age_to) if  preferred_age_from && preferred_age_to
-    activities = activities.where(location_id:location.try(:id)) if params[:location]
-    activities = activities.where(state:state) if state
-    activities = activities.where(date_from:date_from) if date_from && !date_to
+    activities = activities.where(location_id: location.try(:id)) if params[:location]
+    activities = activities.where(state: state) if state
+    activities = activities.where(date_from: date_from) if date_from && !date_to
     activities = activities.where("date_from >= ? ", date_from).where("date_from <= ? ", date_to) if date_from && date_to
 
     render json: activities
