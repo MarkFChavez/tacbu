@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :activities, through: :user_activities
 
   def self.from_omniauth(auth)
-    me = Koala::Facebook::API.new(auth["access_token"]).get_object("me") rescue nil
+    me = Koala::Facebook::API.new(auth[:access_token]).get_object("me") rescue nil
 
     if me
       where(uid: auth.uid).first_or_create do |user|

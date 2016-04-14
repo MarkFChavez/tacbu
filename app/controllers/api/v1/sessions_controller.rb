@@ -1,7 +1,12 @@
 class Api::V1::SessionsController < Api::BaseController
   def create
-    user = User.find_from_omniauth(auth_hash)
-    sign_in(user, store: false)
+    user = User.from_omniauth(auth_hash)
+
+    if user
+      sign_in(user, store: false)
+    else
+      return authentication_error
+    end
 
     render json: { api_key: user.api_key }
   end
