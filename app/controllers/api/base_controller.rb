@@ -10,10 +10,14 @@ class Api::BaseController < ActionController::Base
     user = User.find_by(access_token: access_token)
 
     if user
-      true
+      sign_in user, store: false
     else
-      false
+      authentication_error
     end
+  end
+
+  def authentication_error
+    render json: { error: "Please sign in to continue." }, status: 401
   end
 
   def access_token
