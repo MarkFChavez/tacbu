@@ -4,11 +4,11 @@ class Api::V1::ActivitiesController < Api::BaseController
 
   def index
     activities = Activity.all
-
+    # activities = activities.where(preferred_gender: [current_user.gender, "n"])
+    
     activities = activities.where(category: category) if category
-    activities = activities.where(preferred_gender: preferred_gender) if preferred_gender
     activities = activities.where("preferred_age_from <= ? ", preferred_age_from).where("preferred_age_to >= ? ", preferred_age_to) if  preferred_age_from && preferred_age_to
-    activities = activities.where(location_id: location.try(:id)) if params[:location]
+    activities = activities.where(location_id: location_id) if params[:location_id]
     activities = activities.where(state: state) if state
     activities = activities.where(date_from: date_from) if date_from && !date_to
     activities = activities.where("date_from >= ? ", date_from).where("date_from <= ? ", date_to) if date_from && date_to
@@ -22,6 +22,7 @@ class Api::V1::ActivitiesController < Api::BaseController
     render json: activity
   end
 
+  # TODO: create UserActivity
   def create
     activity = Activity.new(activities_params)
     activity.save
@@ -42,12 +43,8 @@ class Api::V1::ActivitiesController < Api::BaseController
     params[:category]
   end
 
-  def preferred_gender
-    params[:preferred_gender]
-  end
-
   def location
-    Location.find_by(city:params[:location]) if params[:location]
+    params[:location_id]
   end
 
   def state
