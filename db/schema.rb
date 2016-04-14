@@ -11,20 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414134711) do
+ActiveRecord::Schema.define(version: 20160414145146) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "date_from"
     t.datetime "date_to"
     t.string   "name"
     t.string   "preferred_gender"
-    t.integer  "preferred_age"
     t.string   "state"
     t.text     "description"
     t.integer  "category_id"
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "preferred_age_from"
+    t.integer  "preferred_age_to"
   end
 
   add_index "activities", ["category_id"], name: "index_activities_on_category_id"
