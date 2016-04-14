@@ -7,6 +7,8 @@ class Api::BaseController < ActionController::Base
   private
 
   def authenticate
+    return authentication_error unless authorization
+
     uid, access_token = authorization.split(":")
 
     user = User.find_by(uid: uid)
