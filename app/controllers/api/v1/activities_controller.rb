@@ -8,7 +8,7 @@ class Api::V1::ActivitiesController < Api::BaseController
     elsif list == "history"
     elsif list == "booked"
     else
-      activities = activity.all
+      activities = Activity.all
     end
 
     activities = activities.where(category:category) if category
