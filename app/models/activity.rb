@@ -3,7 +3,13 @@ class Activity < ActiveRecord::Base
   belongs_to :category
 
   has_many :user_activities, dependent: :destroy
-  has_many :members, through: :user_activities, class_name: "User"
+  has_many :members, through: :user_activities, class_name:"User", source: :user
+
+  has_many :joined_user_activities, -> { where(role: "joiner").order(created_at: :asc)}, class_name: "UserActivity"
+  has_many :joiners, through: :joined_user_activities, class_name:"User", source: :user
+
+  has_many :organized_user_activities, -> { where(role: "organizer")}, class_name: "UserActivity"
+  has_many :owners, through: :organized_user_activities, class_name:"User", source: :user
 
   validates :name, presence: true
 
@@ -27,4 +33,9 @@ class Activity < ActiveRecord::Base
     user_activity = user_activities.organizers.last
     user_activity.try(:user)
   end
+
+  def next_joiner
+    self.joiners.first
+  end
+
 end
