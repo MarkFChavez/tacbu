@@ -5,4 +5,7 @@ class UserActivity < ActiveRecord::Base
   def self.organizers
     where(role: :organizer)
   end
+
+  state_machine :state, initial: :pending do
+  end
 end

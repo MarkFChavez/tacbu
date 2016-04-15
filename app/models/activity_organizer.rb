@@ -19,7 +19,6 @@ class ActivityOrganizer
 
   def create_activity
     activity = organizer.activities.build(attributes)
-    activity.state = :pending
     activity.save
 
     activity

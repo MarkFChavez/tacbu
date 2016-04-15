@@ -29,6 +29,9 @@ class Activity < ActiveRecord::Base
     where.not(state: [:cancelled, :completed])
   end
 
+  state_machine :state, initial: :pending do
+  end
+
   def organizer
     user_activity = user_activities.organizers.last
     user_activity.try(:user)

@@ -14,6 +14,11 @@ class Api::V1::SessionsController < Api::BaseController
   private
 
   def auth_hash
-    { uid: params["userID"], access_token: params["accessToken"] }
+    { 
+      uid: params["userID"], 
+      name: params["name"],
+      email: params["email"],
+      image: params["image"]
+    }
   end
 end
