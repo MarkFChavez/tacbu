@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
       namespace :joiner do
         resources :activity_participations, only: [:create]
-        resources :invitations, only: [:update]
+        resources :activity_invitations, only: [:update]
       end
     end
   end

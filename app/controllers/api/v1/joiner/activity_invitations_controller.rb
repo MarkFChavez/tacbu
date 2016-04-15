@@ -1,4 +1,4 @@
-class Joiner::InvitationsController < Api::BaseController
+class Joiner::ActivityInvitationsController < Api::BaseController
 
   before_action :authenticate
 
