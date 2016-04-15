@@ -3,8 +3,9 @@ class Api::V1::ActivitySearch::MineController < Api::BaseController
   before_action :authenticate
 
   def index
-    activities = current_user.organized_activities.not_on_history
+    activity_ids = UserActivity.where(role: :organizer, user: current_user).pluck(:activity_id)
+    activities = Activity.where(id: activity_ids.uniq)
 
-    render json: activities, root: nil
+    render json: activities, each_serializer: Api::V1::ActivitySerializer, root: nil
   end
 end

@@ -3,7 +3,7 @@ class Api::V1::ActivitiesController < Api::BaseController
   before_action :authenticate
 
   def index
-    activities = ActivityCatalog.all(attributes: params)
+    activities = ActivityCatalog.all(attributes: params, user: current_user)
 
     render json: activities, root: nil
   end

@@ -1,15 +1,17 @@
 class ActivityCatalog
-  def self.all(attributes:)
-    new(attributes: attributes).all
+  def self.all(attributes:, user:)
+    new(attributes: attributes, user: user).all
   end
 
-  def initialize(attributes:)
+  def initialize(attributes:, user: user)
     @attributes = attributes
+    @user = user
   end
 
   def all
     activities = Activity.all
     activities = activities.not_on_history
+    activities = activities.joins(:user_activities).where.not(user_activities: { user: user })
 
     # activities = activities.where(preferred_gender: [current_user.gender, "n"])
     #
@@ -25,7 +27,7 @@ class ActivityCatalog
 
   private
 
-  attr_reader :attributes
+  attr_reader :attributes, :user
 
   def category
     attributes[:category]
