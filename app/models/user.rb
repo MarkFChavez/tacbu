@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     me = Koala::Facebook::API.new(auth[:access_token]).get_object("me") rescue nil
 
     if me
-      where(uid: auth.uid).first_or_create do |user|
+      where(uid: auth[:uid]).first_or_create do |user|
         user.name = me["name"]
         user.email = me["email"]
         user.image = me["image"]
