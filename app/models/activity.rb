@@ -19,6 +19,10 @@ class Activity < ActiveRecord::Base
     where(state: :booked)
   end
 
+  def self.not_on_history
+    where.not(state: [:cancelled, :completed])
+  end
+
   def organizer
     user_activity = user_activities.organizers.last
     user_activity.try(:user)
