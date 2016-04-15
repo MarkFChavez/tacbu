@@ -4,8 +4,18 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #list all joined and owned activities
   has_many :user_activities, dependent: :destroy
   has_many :activities, through: :user_activities
+
+
+  #list only owned activities
+  has_many :owned_user_activities, -> { where(role: "owner")}, class_name: "UserActivity"
+  has_many :owned_activities, through: :owned_user_activities, class_name: "Activity", source: :user
+
+  #list only joined activities
+  has_many :joined_user_activities, -> { where(role: "joiner")}, class_name: "UserActivity"
+  has_many :joined_activities, through: :joined_user_activities, class_name: "Activity", source: :user
 
   def self.from_omniauth(auth)
     me = Koala::Facebook::API.new(auth[:access_token]).get_object("me") rescue nil

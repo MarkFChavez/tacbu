@@ -15,3 +15,10 @@
 /log/*
 !/log/.keep
 /tmp
+
+.idea/tacbu.iml
+.idea/workspace.xml
+.idea/inspectionProfiles/
+.idea/inspectionProfiles/
+.idea/runConfigurations/
+
