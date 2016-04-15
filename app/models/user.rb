@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
 
 
   #list only owned activities
-  has_many :owned_user_activities, -> { where(role: "owner")}, class_name: "UserActivity"
-  has_many :owned_activities, through: :owned_user_activities, class_name: "Activity", source: :user
+  has_many :organized_user_activities, -> { where(role: "organizer")}, class_name: "UserActivity"
+  has_many :organized_activities, through: :organized_user_activities, class_name: "Activity", source: :user
 
   #list only joined activities
   has_many :joined_user_activities, -> { where(role: "joiner")}, class_name: "UserActivity"

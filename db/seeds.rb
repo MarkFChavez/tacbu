@@ -25,7 +25,9 @@ for i in 1..40
   user = User.create(email: "user#{i}@gmail.com", name: "User #{i}", gender: "m", password: "foobar123", api_key: "#{i}23")
 
   for j in 1..3
-    activity = Activity.new(date_from: Time.now, name:"Activity #{i}", location: makati_city, preferred_gender:"f", state: :pending, preferred_age_from:20, preferred_age_to: 25, category: food_buddy)
+    gender = ["f", "m", "n"]
+
+    activity = Activity.new(date_from: Time.now, name:"Activity #{i}", location: Location.all.sample, preferred_gender: gender.sample, state: :pending, preferred_age_from:20, preferred_age_to: 25, category: Category.all.sample)
     ActivityOrganizer.create(attributes: activity.attributes, organizer: user)
   end
 end
