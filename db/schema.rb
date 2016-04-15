@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414212424) do
+ActiveRecord::Schema.define(version: 20160415051055) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "date_from"
@@ -68,10 +68,8 @@ ActiveRecord::Schema.define(version: 20160414212424) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "access_token"
     t.string   "gender"
     t.date     "birth_date"
-    t.string   "uid"
     t.string   "name"
     t.string   "api_key"
     t.string   "image"

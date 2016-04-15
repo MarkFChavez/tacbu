@@ -1,11 +1,11 @@
 class Api::V1::SessionsController < Api::BaseController
   def create
-    user = User.from_omniauth(auth_hash)
+    user = User.find_by(auth_hash)
 
     if user
       sign_in(user, store: false)
     else
-      return authentication_error
+      return invalid_signin_error
     end
 
     render json: { api_key: user.api_key }
@@ -14,11 +14,6 @@ class Api::V1::SessionsController < Api::BaseController
   private
 
   def auth_hash
-    { 
-      uid: params["userID"], 
-      name: params["name"],
-      email: params["email"],
-      picture: params["picture"]
-    }
+    params[:auth_hash]
   end
 end

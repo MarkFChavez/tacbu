@@ -20,6 +20,10 @@ class Api::BaseController < ActionController::Base
     render json: { error: 'Please sign in to continue.' }, status: 401
   end
 
+  def invalid_signin_error
+    render json: { error: 'Invalid credentials.' }, status: 401
+  end
+
   def api_key
     request.headers['Authorization']
   end
