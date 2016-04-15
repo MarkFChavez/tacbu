@@ -16,6 +16,7 @@
 !/log/.keep
 /tmp
 
+.idea/*
 .idea/tacbu.iml
 .idea/workspace.xml
 .idea/inspectionProfiles/
