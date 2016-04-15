@@ -18,7 +18,7 @@ class Api::V1::SessionsController < Api::BaseController
       uid: params["userID"], 
       name: params["name"],
       email: params["email"],
-      image: params["image"]
+      picture: params["picture"]
     }
   end
 end

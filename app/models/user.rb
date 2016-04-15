@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     where(uid: auth[:uid]).first_or_create do |user|
       user.name = auth[:name]
       user.email = auth[:email]
-      user.image = auth[:image]
+      user.image = auth[:picture]
       user.api_key = generate_token
       user.password = Devise.friendly_token[0, 20]
     end

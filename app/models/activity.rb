@@ -13,6 +13,8 @@ class Activity < ActiveRecord::Base
 
   validates :name, presence: true
 
+  after_initialize :set_initial_state
+
   def self.recent
     order(created_at: :desc)
   end
@@ -30,6 +32,17 @@ class Activity < ActiveRecord::Base
   end
 
   state_machine :state, initial: :pending do
+    event :book do
+      transition any => :booked
+    end
+
+    event :cancel do
+      transition any => :cancelled
+    end
+
+    event :complete do
+      transition any => :completed
+    end
   end
 
   def organizer
@@ -39,6 +52,12 @@ class Activity < ActiveRecord::Base
 
   def next_joiner
     self.joiners.first
+  end
+
+  private
+
+  def set_initial_state
+    self.state ||= :pending
   end
 
 end

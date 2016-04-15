@@ -8,10 +8,17 @@ Rails.application.routes.draw do
       resources :categories, only: [:index]
       resources :sessions, only: [:create]
 
+      get "/users/me" => "me#show"
+
       namespace :activity_search do
         resources :histories, only: [:index]
         resources :booked, only: [:index]
         resources :mine, only: [:index]
+      end
+
+      namespace :joiner do
+        resources :activity_participations, only: [:create]
+        resources :invitations, only: [:update]
       end
     end
   end
